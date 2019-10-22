@@ -20,6 +20,7 @@ var trap = function(height) {
                 };
                 stack.push(i);
             };
+            
         } else {
             while (stack.length !== 0) {
                 let stackTop1 = stack.pop();
