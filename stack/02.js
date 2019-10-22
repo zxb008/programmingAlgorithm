@@ -1,37 +1,37 @@
-function Stack() {
-    this.dataStore = [];
-    this.top = 0;
-    this.push = push;
-    this.pop = pop;
-    this.peek = peek;
-    this.clear = clear;
-    this.length = length;
+var  trap = function (height) {
+    
 }
-function push(element) {
-    this.dataStore[this.top++] = element;
-}
-function peek() {
-    return this.dataStore[this.top - 1];
-}
-function pop() {
-    return this.dataStore[--this.top];
-}
-function clear() {
-    this.top = 0;
-}
-function length() {
-    return this.top;
-}
-//
 var trap = function(height) {
-    var stack = new Stack();
+    let stack = [];
+    let trap = 0;
     for (let i = 0; i < height.length; i++) {
-        let h = height[i]
-        if (stack.length() == 0) {
-            //如果栈为空
+        if (stack.length === 0 || height[i] < height[stack[0]]) {
+            if (height[i] < height[i-1]) {
+                stack.push(i);
+            } else {
+                while (height[i] >= height[stack[stack.length-1]]) {
+                    let stackOldTop = stack.pop();
+                    let stackNewTop = stack[stack.length-1];
+                    if (height[i] < height[stackNewTop]) {
+                        trap = trap + (height[i] - height[stackOldTop]) * (i - stackNewTop -1);
+                    } else {
+                        trap = trap + (height[stackNewTop] - height[stackOldTop]) * (i - stackNewTop -1);
+                    };
+                };
+                stack.push(i);
+            };
         } else {
-            
-        }
-    }
+            while (stack.length !== 0) {
+                let stackTop1 = stack.pop();
+                let stackTop2 = stack[stack.length-1];
+                if (stack.length ===0) break;
+                trap = trap + (height[stackTop2] - height[stackTop1]) * (i - stackTop2 -1);
+            };
+            stack.push(i);
+        };
+    };
+    return trap;
 };
-trap( [0,1,0,2,1,0,1,3,2,1,2,1])
+
+
+console.log(trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]));
