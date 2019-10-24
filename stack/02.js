@@ -1,3 +1,4 @@
+//接雨水问题
 var  trap = function (height) {
     
 }
