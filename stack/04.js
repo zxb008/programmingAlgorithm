@@ -43,6 +43,9 @@
 // 输入："/a//b////c/d//././/.."
 // 输出："/a/b/c"
 
+
+
+
 var simplifyPath = function (path) {
    
     var stack = [];
