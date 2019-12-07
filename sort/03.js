@@ -22,6 +22,7 @@ var merge = function (intervals) {
   while (intervals.length) {
     let item = intervals.shift();
 
+    
     if (prvItem && prvItem[1] >= item[0] && prvItem[0] <= item[1]) {
       //有交集的时候
       prvItem = [Math.min(prvItem[0], item[0]), Math.max(prvItem[1], item[1])]
