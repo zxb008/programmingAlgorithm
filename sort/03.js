@@ -24,18 +24,17 @@ var merge = function (intervals) {
 
     if (prvItem && prvItem[1] >= item[0] && prvItem[0] <= item[1]) {
       //有交集的时候
-      prvItem = [Math.min(prvItem[0],item[0]),Math.max(prvItem[1],item[1])]
+      prvItem = [Math.min(prvItem[0], item[0]), Math.max(prvItem[1], item[1])]
       if (intervals.length === 0) {
         mergeIntervals.push(prvItem)
       }
     } else if (prvItem && (prvItem[1] < item[0] || prvItem[0] > item[1])) {
-        //无交集的时候
+      //无交集的时候
       mergeIntervals.push(prvItem)
       prvItem = item
       if (intervals.length === 0) {
         mergeIntervals.push(prvItem)
       }
-
     }
     else {
       prvItem = item
