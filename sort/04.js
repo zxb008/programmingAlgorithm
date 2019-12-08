@@ -16,7 +16,7 @@
 //[128,12]
 // [121,12]
 var largestNumber = function (nums) {
-  //得到一个字符数组
+
   nums = nums.map(item => {
     return item.toString()
   })
