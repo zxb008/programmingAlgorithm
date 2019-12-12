@@ -1,4 +1,4 @@
-//767.重构字符串
+// //767.重构字符串
 // 给定一个字符串S，检查是否能重新排布其中的字母，使得两相邻的字符不同。
 
 // 若可行，输出任意可行的结果。若不可行，返回空字符串。
@@ -12,72 +12,80 @@
 // 输入: S = "aaab"
 // 输出: ""
 
+/**
+ * @param {string} S
+ * @return {string}
+ */
 
-//解题思路：
-
-// 比如 "aaabbc"，当发现第二个字符也是 ‘a’ 的时候，就需要往后遍历找到第一个不是 ‘a’ 的字符，
-// 即 ‘b’，然后交换 ‘a’ 和 ‘b’ 即可，然后继续往后面进行同样的处理，当无法找到不同的字符后就
-// 返回空串。这种方法对有序的字符串S是可以的，虽然题目给的两个例子中字符串S都是有序的，实际上
-// 不一定是有序的。所以最先的想法是给数组排序呗，但是博主的这个解法跪在了这个例子上 "vvvlo"，
-// 我们发现排序后就变成 "lovvv"，这样上面提到的解法就跪了。其实这里次数出现多的字符串需要在前面，
-// 这样才好交换嘛。那么还是要统计每个字符串出现的次数,再进行排序
+// 写一个NewChar类，里面包含字母的出现频数，和字母本身。用优先队列PriorityQueue来存储一个一个的NewChar，并自己写一个比较器，
+// 通过字母的频数降序排列，即构建一个大顶堆。之后两两输出，输出前两个大的，然后将它们两个对应的count频率-1，再次放入，继续输出……
 
 var reorganizeString = function (S) {
-  S = S.split('');
-  let singleArr = [...new Set(S)]
+  S = S.split('')
+  //将数组去重
+  let singleArr = [... new Set(S)]
   let arr = []
-  //得到一个对象数组，元素是字符和字符数量
-  for (let i = 0; i < singleArr.length; i++) {
-    let count = 0;
-    for (let j = 0; j < S.length; j++) {
-      if (singleArr[i] === S[j]) {
+  singleArr.forEach(ele => {
+    let count = 0
+    S.forEach(item => {
+      if (ele === item) {
         count++
       }
-    }
+    })
     arr.push({
-      ele: singleArr[i],
+      ele,
       count
     })
-  }
-  //按照字符出现的次数从大到小排列
-  // [{ele:'v',count:3},{ele:'l',count:1},{ele:'o',count:1}]
+  })
   arr.sort((a, b) => {
     return b.count - a.count
   })
-  // console.log(arr);
-  let strNum = arr.length //得到数组的长度，也就是不同字符的个数
-  let maxS = arr[0].count //得到出现次数最多的字符的次数
-  if (maxS <= strNum ) {
-    //转化为数组
-    // [ 'v', 'v', 'v', 'l', 'o' ]
-    arr = arr.map(item => {
-      let str = ""
-      for (let i = 0; i < item.count; i++) {
-        str += item.ele
+  let str = ""
+  while (arr.length) {
+    if (arr.length > 1) {
+      let pre = arr[0]
+      let curr = arr[1]
+      //判断当前两个元素的次数
+      if (pre.count > 0 && curr.count > 0) {
+        str += (pre.ele + curr.ele)
+        pre.count--;
+        curr.count--;
+        // arr.push(curr)
+        // arr.push(pre)
       }
-      return str
-    }).join('').split('')
-    //位置的重整 
-    let middle = ""
-    for (let i = 0; i < arr.length-1; i++) {
-       //往后找到不同的字符，然后交换位置
-      if (arr[i] === arr[i+1] ) {
-        arr.forEach((item,index)=>{
-          if (index>i+1) {
-              if ( item !== arr[i+1]) {
-                 middle  = arr[i+1]
-                 arr[i+1] = item
-                 arr[index] = middle
-              } 
-          }
-        })
+      else {
+        if (pre.count === 0 && curr.count > 0) {
+          //2.pre元素的个数为0
+          arr.shift()
+          // arr.push(curr)
+        } else if (pre.count > 0 && curr.count === 0) {
+          //3.curr元素的个数为0
+          arr[1] = arr[0]
+          arr.shift()
+        } else {
+          //1.两个元素的个数都是0
+          arr.shift()
+          arr.shift()
+        }
+      }
+    } else {
+
+      if (arr.length === 1) {
+        //arr长度为1
+        let item = arr.shift()
+        if (item.count > 1) {
+          return ""
+        } else {
+          return str + item.ele
+        }
+      } else {
+        //长度为0
+        return str
       }
     }
-   
-    return arr.join('')
-  } else {
-    return ""
   }
 };
-// reorganizeString('lovvv')
-console.log(reorganizeString("baaba"));
+
+
+console.log(reorganizeString("aab"));
+
