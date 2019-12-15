@@ -40,6 +40,8 @@ var reorganizeString = function (S) {
   arr.sort((a, b) => {
     return b.count - a.count
   })
+  console.log(arr);
+
   let str = ""
   while (arr.length) {
     if (arr.length > 1) {
@@ -48,28 +50,26 @@ var reorganizeString = function (S) {
       //判断当前两个元素的次数
       if (pre.count > 0 && curr.count > 0) {
         str += (pre.ele + curr.ele)
+        console.log(str);
         pre.count--;
         curr.count--;
-        // arr.push(curr)
-        // arr.push(pre)
       }
-      else {
-        if (pre.count === 0 && curr.count > 0) {
-          //2.pre元素的个数为0
-          arr.shift()
-          // arr.push(curr)
-        } else if (pre.count > 0 && curr.count === 0) {
-          //3.curr元素的个数为0
-          arr[1] = arr[0]
-          arr.shift()
-        } else {
-          //1.两个元素的个数都是0
-          arr.shift()
-          arr.shift()
+      else if (pre.count === 0 && curr.count > 0) {
+        //2.pre元素的个数为0
+        arr.shift()
+      } else if (pre.count > 0 && curr.count === 0) {
+        //3.curr元素的个数为0
+        arr[1] = arr[0]
+        arr.shift()
+      } else {
+        //1.两个元素的个数都是0
+        arr.shift()
+        arr.shift()
+        if (arr.length  === 0) {
+          return str
         }
       }
     } else {
-
       if (arr.length === 1) {
         //arr长度为1
         let item = arr.shift()
@@ -87,5 +87,5 @@ var reorganizeString = function (S) {
 };
 
 
-console.log(reorganizeString("aab"));
+console.log(reorganizeString("abbabbaaab"));
 
