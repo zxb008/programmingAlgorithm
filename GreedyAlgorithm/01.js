@@ -52,6 +52,7 @@ var canCompleteCircuit = function (gas, cost) {
     let position = 0
     let currSum = 0
     for (let i = 0; i < res.length; i++) {
+      //注意这里的解法
       currSum += res[i]
       if (currSum < 0) {
         currSum = 0
