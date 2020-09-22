@@ -2,6 +2,28 @@
 
 //总结：运用单调栈的思路，也就是说在队列或数组中，我们需要通过比较前后元素的大小关系来解决问题时我们通常使用单调栈。
 
+var StockSpanner = function() {
+    this.stack = [];
+    this.count = 0;
+};
+
+/** 
+ * @param {number} price
+ * @return {number}
+ */
+StockSpanner.prototype.next = function(price) {
+    while (this.stack.length && price >=  this.stack[this.stack.length - 1].value) {
+        this.stack.pop();
+    }
+    let tmp = this.stack.length ? this.stack[this.stack.length - 1].index : 0;
+    this.count++;
+    this.stack.push({
+        index: this.count,
+        value: price
+    });
+    return this.count - tmp;
+};
+
 
 var StockSpanner = function () {
 
