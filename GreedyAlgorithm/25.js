@@ -118,7 +118,7 @@ var isPossible = function (nums) {
         let curItem = nums[index];
         let resIndex = isChain(res, curItem); // 判断是否需要构建新的子序列
         if (resIndex !== -1) {
-            // 不需要构建新的子序列，找到长度最短的那个 res[resIndex]，然后将当前元素拼接上去
+            // 不需要构建新的子序列，找到长度最短的那个 res[resIndex]，然后将当前元素拼接上去,因为需要尽可能的保证所有的的子序列的长度 >= 3
             res[resIndex].push(curItem);
         } else {
             // 需要构建新的子序列
