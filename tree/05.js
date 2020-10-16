@@ -38,5 +38,25 @@
  * @return {boolean}
  */
 var isUnivalTree = function(root) {
-
+    if (!root) {
+        // root === null
+        return 
+    }
+    const res = [];
+    function Preface(root) {
+       res.push(root.val)
+       if (root.left) {
+        Preface(root.left)
+       }
+       if (root.right) {
+        Preface(root.right)
+       }
+    }
+    Preface(root);
+    const len  = [...new Set(res)].length
+    if (len === 1) {
+        return true;
+    } else {
+        return false;
+    }
 };
