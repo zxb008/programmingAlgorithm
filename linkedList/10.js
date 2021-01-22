@@ -22,19 +22,42 @@
  * @param {ListNode} head
  * @return {void} Do not return anything, modify head in-place instead.
  */
-var  flip = function (head) {
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+}
+var flip = function (head) {
     let prev = null;
     let curr = head;
+    let next;
     while (curr) {
-        let next = curr.next;
+        next = curr.next;
         curr.next = prev;
         prev = curr;
         curr = next;
     }
-    return curr;
+    // 注意这里返回的是prev
+    return prev;
 }
+// var merge = function(firstList,secondList){
+//     let res = {next:null};
+//     let lastRes = res;
+//     while (firstList || secondList) {
+//         if (firstList) {
+//             lastRes.next = new ListNode(firstList.val);
+//             firstList = firstList.next;
+//         }
+//         lastRes = lastRes.next;
+//         if (secondList) {
+//             lastRes.next = new ListNode(secondList.val);
+//             secondList = secondList.next;
+//         }
+//         lastRes = lastRes.next;
+//     }
+//     return res.next;
+// }
 // 思路:使用快慢指针将链表分割成两个链表，然后将两个链表交替连接
-var reorderList = function(head) {
+var reorderList = function (head) {
     if (!head || !head.next) {
         return head;
     }
@@ -47,18 +70,20 @@ var reorderList = function(head) {
     // 此时，链表的长度为偶数：solw指向中偏左的节点，链表的长度为奇数：solw指向中心点
     let secondList = slow.next;
     secondList = flip(secondList);// 链表的翻转
+
     slow.next = null;
     let firstList = head;
-    // 将两条链表合并
-    let res = {next:null};
+    // 将两条链表合并,注意题目要求，要在原链表上面操作，不要返回任何东西（所以不可定义一个新变量之类的）
+    // let res = merge(firstList,secondList);
     while (firstList || secondList) {
-        let first = new ListNode(firstList.val);
-        let second = new ListNode(secondList.val);
-        first.next = second;
-        res.next = first;
-        
+        // 由上面可知 firstList 的长度 >= secondList 的长度
+        if (secondList) {
+            let next = firstList.next;
+            firstList.next = new ListNode(secondList.val);
+            firstList = firstList.next;
+            firstList.next = next;
+            secondList = secondList.next;
+        }
         firstList = firstList.next;
-        secondList = secondList.next;
     }
-    return res.next;
 };
