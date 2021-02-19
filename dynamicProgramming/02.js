@@ -46,5 +46,18 @@ var climbStairs = function(n) {
     // const map = new Map();
     // return stairsWithMap(n,map)
     // 2. 迭代解决动态规划
-    
+    if (n < 1) {
+        return 0;
+    }else if(n===1){
+        return 1;
+    }else if(n===2){
+        return 2;
+    }
+    let a = 1, b=2 ,ans = 0;
+    for (let index = 0; index < n; index++) {
+        ans = a + b;
+        a = b;
+        b = ans;
+    }
+    return ans;
 };
