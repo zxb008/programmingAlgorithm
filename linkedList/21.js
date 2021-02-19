@@ -35,43 +35,6 @@
  * @return {ListNode}
  */
 var insertionSortList = function (head) {
-    if (!head || !head.next) {
-        return head;
-    }
-    let prev = head;
-    let curr = head.next;
-    while (curr) {
-        if (curr.val > prev.val || curr.val === prev.val) {
-            prev = curr;
-            curr = curr.next;
-        } else {
-            prev.next = curr.next;
-            // 现在将curr在head到prev之间的链表之间插入进合适的位置
-            let min = null;
-            let max = head;
-            let next;
-            while (max) {
-                if (curr.val < max.val) {
-                    if (min) {
-                        curr.next = max;
-                        min.next = curr;
-                    } else {
-                        // min 是null
-                        curr.next = max;
-                        head = curr;
-                    }
-                    break;
-                }
-                next = max.next;
-                min = max;
-                max = next;
-            }
-        }
-    }
-    return head;
-};
-
-var insertionSortList = function (head) {
     // 首先本题中返回值不是原本链表的头的话，我们可以使用虚拟节点。
     // 所以可以采用虚节点：
     // 1. 将头节点变成中间节点，简化判断。
