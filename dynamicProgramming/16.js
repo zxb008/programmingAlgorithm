@@ -32,6 +32,8 @@
  * @return {boolean}
  */
 
+// 0. https://blog.csdn.net/youngyangyang04/article/details/108355397?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&spm=1001.2101.3001.4242
+
 // 1. 因为两个玩家不断的交替选择分数，是不是可以用递归？(+备忘录思路)
 // 怎么计算呢？
 // 当前选择的分数，减去，往后对手赢过自己的分数（对剩余数组递归）。因为有两端可选择，所以差值有两个，取较大的判断是否>=0。
